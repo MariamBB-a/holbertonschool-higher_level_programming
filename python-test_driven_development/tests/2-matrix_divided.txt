@@ -1,5 +1,8 @@
 """
-Tests for matrix_divided
+2-matrix_divided
+================
+
+Tests for the function matrix_divided(matrix, div)
 """
 
 >>> matrix_divided = __import__('2-matrix_divided').matrix_divided
@@ -37,4 +40,6 @@ division by zero
 ... except TypeError as e:
 ...     print(e)
 div must be a number
+
 """
+
