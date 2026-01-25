@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """
-Module that defines a function to print a person's full name.
+Module that defines a function to print a person's name.
 """
+
 
 def say_my_name(first_name, last_name=""):
     """
@@ -9,7 +10,7 @@ def say_my_name(first_name, last_name=""):
 
     Args:
         first_name (str): First name
-        last_name (str): Last name (optional)
+        last_name (str): Last name
 
     Raises:
         TypeError: If first_name or last_name is not a string
