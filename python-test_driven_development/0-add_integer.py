@@ -22,14 +22,14 @@ def add_integer(a, b=98):
     if not isinstance(b, (int, float)):
         raise TypeError("b must be an integer")
 
-    try:
-        a = int(a)
-    except (ValueError, OverflowError):
+    # Handle NaN or Infinity
+    if isinstance(a, float) and (a != a or a == float("inf") or a == float("-inf")):
         raise TypeError("a must be an integer")
-
-    try:
-        b = int(b)
-    except (ValueError, OverflowError):
+    if isinstance(b, float) and (b != b or b == float("inf") or b == float("-inf")):
         raise TypeError("b must be an integer")
+
+    # Cast floats to integers
+    a = int(a)
+    b = int(b)
 
     return a + b
