@@ -1,80 +1,13 @@
-# tests/3-say_my_name.txt
+>>> say_my_name = __import__('3-say_my_name').say_my_name
 
-"""
-Doctest for 3-say_my_name module
-"""
+>>> say_my_name("John", "Smith")
+My name is John Smith
 
-> > > say_my_name = **import**('3-say_my_name').say_my_name
+>>> say_my_name("Bob")
+My name is Bob 
 
-# ==============================
-
-# Basic valid cases
-
-# ==============================
-
-> > > say_my_name("John", "Smith")
-> > > My name is John Smith
-
-> > > say_my_name("Walter", "White")
-> > > My name is Walter White
-
-> > > say_my_name("Bob")
-> > > My name is Bob
-
-# ==============================
-
-# Type error cases
-
-# ==============================
-
-> > > say_my_name(12, "White")
-> > > Traceback (most recent call last):
-> > > ...
-> > > TypeError: first_name must be a string
-
-> > > say_my_name("John", 12)
-> > > Traceback (most recent call last):
-> > > ...
-> > > TypeError: last_name must be a string
-
-> > > say_my_name(12, 34)
-> > > Traceback (most recent call last):
-> > > ...
-> > > TypeError: first_name must be a string
-
-# ==============================
-
-# Edge cases
-
-# ==============================
-
-> > > say_my_name("", "Smith")
-> > > My name is  Smith
-
-> > > say_my_name("John", "")
-> > > My name is John
-
-> > > say_my_name("", "")
-> > > My name is
-
-# ==============================
-
-# Non-string types
-
-# ==============================
-
-> > > say_my_name(["John"], "Smith")
-> > > Traceback (most recent call last):
-> > > ...
-> > > TypeError: first_name must be a string
-
-> > > say_my_name("John", ["Smith"])
-> > > Traceback (most recent call last):
-> > > ...
-> > > TypeError: last_name must be a string
-
-> > > say_my_name(None, "Smith")
-> > > Traceback (most recent call last):
-> > > ...
-> > > TypeError: first_name must be a string
+>>> say_my_name(12, "White")
+Traceback (most recent call last):
+...
+TypeError: first_name must be a string
 
