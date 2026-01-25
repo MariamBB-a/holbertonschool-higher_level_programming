@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Module that adds two integers"""
+"""Module that adds two integers safely."""
 
 
 def add_integer(a, b=98):
