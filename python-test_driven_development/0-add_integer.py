@@ -1,27 +1,28 @@
 #!/usr/bin/python3
-"""Module that adds two integers safely."""
+"""This module contains a function that adds two integers.
+It converts floats to integers and raises TypeError for invalid types.
+"""
 
 
 def add_integer(a, b=98):
-    """Add two integers.
+    """Add two integers safely.
 
     Args:
         a (int or float): first number
-        b (int or float): second number
+        b (int or float, optional): second number, defaults to 98
 
     Raises:
-        TypeError: if a or b is not an integer or float
-        TypeError: if a or b is NaN or infinite
+        TypeError: if a or b is not an integer or float, or cannot be converted
 
     Returns:
-        int: addition of a and b
+        int: the addition of a and b
     """
     if not isinstance(a, (int, float)):
         raise TypeError("a must be an integer")
     if not isinstance(b, (int, float)):
         raise TypeError("b must be an integer")
 
-        try:
+    try:
         a = int(a)
     except (ValueError, OverflowError):
         raise TypeError("a must be an integer")
