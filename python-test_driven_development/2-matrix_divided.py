@@ -22,20 +22,41 @@ def matrix_divided(matrix, div):
         TypeError: if div is not a number (int/float)
         ZeroDivisionError: if div is 0
     """
-    if not isinstance(matrix, list) or not all(isinstance(row, list) for row in matrix):
-        raise TypeError("matrix must be a matrix (list of lists) of integers/floats")
+    if not isinstance(matrix, list) or matrix == []:
+        raise TypeError(
+            "matrix must be a matrix (list of lists) of integers/floats"
+        )
 
-    if not all((isinstance(num, (int, float)) for row in matrix for num in row)):
-        raise TypeError("matrix must be a matrix (list of lists) of integers/floats")
+    row_length = None
+    for row in matrix:
+        if not isinstance(row, list) or row == []:
+            raise TypeError(
+                "matrix must be a matrix (list of lists) of integers/floats"
+            )
 
-    if len(matrix) == 0 or any(len(row) != len(matrix[0]) for row in matrix):
-        raise TypeError("Each row of the matrix must have the same size")
+        if row_length is None:
+            row_length = len(row)
+        elif len(row) != row_length:
+            raise TypeError("Each row of the matrix must have the same size")
+
+        for elem in row:
+            if not isinstance(elem, (int, float)):
+                raise TypeError(
+                    "matrix must be a matrix (list of lists) of integers/floats"
+                )
 
     if not isinstance(div, (int, float)):
         raise TypeError("div must be a number")
 
+    # Let Python raise ZeroDivisionError naturally
     if div == 0:
-        raise ZeroDivisionError("division by zero")
+        1 / div
 
-    return [[round(num / div, 2) for num in row] for row in matrix]
+    new_matrix = []
+    for row in matrix:
+        new_row = []
+        for elem in row:
+            new_row.append(round(elem / div, 2))
+        new_matrix.append(new_row)
 
+    return new_matrix
