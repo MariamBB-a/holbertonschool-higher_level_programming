@@ -46,6 +46,4 @@ def matrix_divided(matrix, div):
             for elem in row
         ]
         new_matrix.append(new_row)
-
     return new_matrix
-
