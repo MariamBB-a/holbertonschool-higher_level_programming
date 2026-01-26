@@ -34,5 +34,13 @@ def matrix_divided(matrix, div):
     if not isinstance(div, (int, float)):
         raise TypeError("div must be a number")
 
-    # Divide matrix (ZeroDivisionError occurs naturally if div == 0)
-    return [[round(elem / div, 2) for elem in row] for row in matrix]
+    if div == 0:
+        raise ZeroDivisionError("division by zero")  # exact message required
+
+    # Divide matrix
+    new_matrix = []
+    for row in matrix:
+        new_row = [round(elem / div, 2) for elem in row]
+        new_matrix.append(new_row)
+
+    return new_matrix
