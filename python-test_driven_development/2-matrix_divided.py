@@ -5,41 +5,37 @@ Module that divides all elements of a matrix
 
 
 def matrix_divided(matrix, div):
-    """
-    Divides all elements of a matrix by div
-    """
-
-    if not isinstance(matrix, list):
+    # Validate matrix
+    if (not isinstance(matrix, list) or matrix == [] or
+            not all(isinstance(row, list) and row for row in matrix)):
         raise TypeError(
             "matrix must be a matrix (list of lists) of integers/floats"
         )
 
-    if not isinstance(div, (int, float)):
-        raise TypeError("div must be a number")
-
-    row_size = None
-    new_matrix = []
+    row_length = len(matrix[0])
 
     for row in matrix:
-        if not isinstance(row, list):
+        if len(row) != row_length:
             raise TypeError(
-                "matrix must be a matrix (list of lists) of integers/floats"
+                "Each row of the matrix must have the same size"
             )
-
-        if row_size is None:
-            row_size = len(row)
-        elif len(row) != row_size:
-            raise TypeError("Each row of the matrix must have the same size")
-
-        new_row = []
         for elem in row:
             if not isinstance(elem, (int, float)):
                 raise TypeError(
                     "matrix must be a matrix (list of lists) of integers/floats"
                 )
-            # division happens HERE — natural ZeroDivisionError
-            new_row.append(round(elem / div, 2))
 
+    # Validate div
+    if not isinstance(div, (int, float)):
+        raise TypeError("div must be a number")
+
+    if div == 0:
+        1 / div  # ← IMPORTANT: natural ZeroDivisionError
+
+    # Divide matrix
+    new_matrix = []
+    for row in matrix:
+        new_row = [round(elem / div, 2) for elem in row]
         new_matrix.append(new_row)
 
     return new_matrix
