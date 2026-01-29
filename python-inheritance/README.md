@@ -1,0 +1,1 @@
+nheritance and class diffrent
