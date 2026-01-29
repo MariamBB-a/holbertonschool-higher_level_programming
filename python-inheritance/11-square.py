@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Module 11-square: defines a Square 
+"""Module 11-square: defines a Square
 class inheriting from Rectangle"""
 
 
