@@ -1,15 +1,15 @@
 #!/usr/bin/python3
-"""Rectangle module with full functionality, PEP8 compliant."""
+"""Module defines a Rectangle class with various utilities."""
 
 
 class Rectangle:
-    """Defines a rectangle with width, height, printing, and comparisons."""
+    """Rectangle class with width, height, and utility methods."""
 
     number_of_instances = 0
     print_symbol = "#"
 
     def __init__(self, width=0, height=0):
-        """Initialize a Rectangle instance."""
+        """Initialize a new Rectangle instance."""
         self.width = width
         self.height = height
         Rectangle.number_of_instances += 1
@@ -21,7 +21,7 @@ class Rectangle:
 
     @width.setter
     def width(self, value):
-        """Set the width, with validation."""
+        """Set the width with type and value validation."""
         if not isinstance(value, int):
             raise TypeError("width must be an integer")
         if value < 0:
@@ -35,7 +35,7 @@ class Rectangle:
 
     @height.setter
     def height(self, value):
-        """Set the height, with validation."""
+        """Set the height with type and value validation."""
         if not isinstance(value, int):
             raise TypeError("height must be an integer")
         if value < 0:
@@ -53,32 +53,33 @@ class Rectangle:
         return 2 * (self.width + self.height)
 
     def __str__(self):
-        """Return the string representation of the rectangle."""
+        """Return the rectangle as a string using print_symbol."""
         if self.width == 0 or self.height == 0:
             return ""
-        sym = str(self.print_symbol)
-        return "\n".join([sym * self.width for _ in range(self.height)])
+        symbol = str(self.print_symbol)
+        return "\n".join([symbol * self.width for _ in range(self.height)])
 
     def __repr__(self):
-        """Return a string that can recreate the rectangle."""
+        """Return a string to recreate the rectangle with eval()."""
         return f"Rectangle({self.width}, {self.height})"
 
     def __del__(self):
-        """Print message on deletion and decrement instance counter."""
+        """Print a message when an instance is deleted."""
         print("Bye rectangle...")
         Rectangle.number_of_instances -= 1
 
     @staticmethod
     def bigger_or_equal(rect_1, rect_2):
-        """Return the rectangle with the bigger area.
-
-        If equal, return rect_1.
-        """
+        """Return the rectangle with the bigger area (rect_1 if equal)."""
         if not isinstance(rect_1, Rectangle):
             raise TypeError("rect_1 must be an instance of Rectangle")
         if not isinstance(rect_2, Rectangle):
             raise TypeError("rect_2 must be an instance of Rectangle")
-
         if rect_1.area() >= rect_2.area():
             return rect_1
         return rect_2
+
+    @classmethod
+    def square(cls, size=0):
+        """Return a new Rectangle instance with width == height == size."""
+        return cls(size, size)
