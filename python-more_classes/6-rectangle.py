@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Defines a Rectangle class with width, height, area, perimeter, print, and instance tracking."""
+"""Defines a Rectangle class with width, height,
+area, perimeter, print, and instance tracking."""
 
 
 class Rectangle:
@@ -64,6 +65,6 @@ class Rectangle:
         return f"{self.__class__.__name__}({self.__width}, {self.__height})"
 
     def __del__(self):
-        """Print a message when an instance is deleted and decrement instance counter."""
+        """Print a message when an instance is deleted and decrement."""
         print("Bye rectangle...")
         Rectangle.number_of_instances -= 1
