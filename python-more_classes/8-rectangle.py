@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Defines a Rectangle class with width, height, area, perimeter, print_symbol, and comparison."""
+"""Defines a Rectangle class with width, height,
+area, perimeter, print_symbol, and comparison."""
 
 
 class Rectangle:
@@ -57,7 +58,8 @@ class Rectangle:
         if self.__width == 0 or self.__height == 0:
             return ""
         sym = str(self.print_symbol)
-        return "\n".join(sym * self.__width for _ in range(self.__height))
+        return "\n".join(sym * self.__width
+        for _ in range(self.__height))
 
     def __repr__(self):
         """Return a string representation that can recreate the object."""
