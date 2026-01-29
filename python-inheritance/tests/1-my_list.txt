@@ -1,5 +1,3 @@
-"""
-Test cases for MyList class
 
 >>> MyList = __import__('1-my_list').MyList
 >>> # Test with positive numbers
@@ -37,4 +35,3 @@ Test cases for MyList class
 []
 >>> print(empty_list)
 []
-"""
