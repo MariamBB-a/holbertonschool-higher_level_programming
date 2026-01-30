@@ -8,17 +8,15 @@ class Shape(ABC):
 
     @abstractmethod
     def area(self):
-        """Return the area of the shape."""
         pass
 
     @abstractmethod
     def perimeter(self):
-        """Return the perimeter of the shape."""
         pass
 
 
 class Circle(Shape):
-    """Circle shape."""
+    """Circle class."""
 
     def __init__(self, radius):
         self.radius = radius
@@ -31,7 +29,7 @@ class Circle(Shape):
 
 
 class Rectangle(Shape):
-    """Rectangle shape."""
+    """Rectangle class."""
 
     def __init__(self, width, height):
         self.width = width
