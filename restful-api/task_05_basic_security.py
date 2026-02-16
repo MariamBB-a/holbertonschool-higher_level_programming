@@ -15,7 +15,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
-# 🔐 Secret key for JWT
+# 🔐 JWT Secret Key
 app.config["JWT_SECRET_KEY"] = "super-secret-key"
 
 auth = HTTPBasicAuth()
@@ -58,7 +58,7 @@ def basic_auth_error(status):
 @auth.login_required
 def basic_protected():
     """Basic Auth protected route"""
-    return jsonify({"message": "Basic Auth: Access Granted"}), 200
+    return "Basic Auth: Access Granted", 200
 
 
 # =========================================================
@@ -91,7 +91,7 @@ def handle_needs_fresh_token(err):
 
 
 # =========================================================
-# 🔑 LOGIN → RETURN JWT TOKEN
+# 🔑 LOGIN → RETURN JWT TOKEN (JSON)
 # =========================================================
 
 @app.route("/login", methods=["POST"])
@@ -107,7 +107,6 @@ def login():
     if not user or not check_password_hash(user["password"], data["password"]):
         return jsonify({"error": "Invalid credentials"}), 401
 
-    # Store username and role inside token
     access_token = create_access_token(
         identity={"username": user["username"], "role": user["role"]}
     )
@@ -116,14 +115,13 @@ def login():
 
 
 # =========================================================
-# 🔐 JWT PROTECTED ROUTE
+# 🔐 JWT PROTECTED ROUTE → PLAIN TEXT
 # =========================================================
 
 @app.route("/jwt-protected", methods=["GET"])
 @jwt_required()
 def jwt_protected():
-    """JWT protected route"""
-    return jsonify({"message": "JWT Auth: Access Granted"}), 200
+    return "JWT Auth: Access Granted", 200
 
 
 # =========================================================
@@ -133,13 +131,12 @@ def jwt_protected():
 @app.route("/admin-only", methods=["GET"])
 @jwt_required()
 def admin_only():
-    """Admin role required"""
     current_user = get_jwt_identity()
 
     if current_user["role"] != "admin":
         return jsonify({"error": "Admin access required"}), 403
 
-    return jsonify({"message": "Admin Access: Granted"}), 200
+    return "Admin Access: Granted", 200
 
 
 # =========================================================
@@ -148,4 +145,3 @@ def admin_only():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
-
