@@ -14,16 +14,12 @@ if __name__ == "__main__":
         passwd=sys.argv[2],
         db=sys.argv[3]
     )
-
     cursor = db.cursor()
 
-    # Parameterized query to prevent SQL injection
-    query = ("SELECT * FROM states "
-             "WHERE name LIKE %s OR name LIKE %s "
-             "ORDER BY id ASC")
+    # Correct placeholder usage with %s
+    query = "SELECT * FROM states WHERE name LIKE %s ORDER BY id ASC"
     cursor.execute(query, ("n%",))
 
-    # Stream results row by row
     for state in cursor:
         print(state)
 
