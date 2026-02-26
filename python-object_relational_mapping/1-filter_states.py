@@ -4,6 +4,7 @@
 import MySQLdb
 import sys
 
+
 if __name__ == "__main__":
     # Connect to MySQL server
     db = MySQLdb.connect(
@@ -17,7 +18,10 @@ if __name__ == "__main__":
     cursor = db.cursor()
 
     # Parameterized query to prevent SQL injection
-    cursor.execute("SELECT * FROM states WHERE name LIKE %s ORDER BY id ASC", ("n%",))
+    query = ("SELECT * FROM states "
+             "WHERE name LIKE %s OR name LIKE %s "
+             "ORDER BY id ASC")
+    cursor.execute(query, ("N%", "n%"))
 
     # Stream results row by row
     for state in cursor:
