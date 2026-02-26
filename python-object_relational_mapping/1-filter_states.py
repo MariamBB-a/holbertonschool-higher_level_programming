@@ -17,7 +17,7 @@ if __name__ == "__main__":
     cursor = db.cursor()
 
     # Parameterized query to prevent SQL injection
-    cursor.execute("SELECT * FROM states WHERE name LIKE %s ORDER BY id ASC", ("N%",))
+    cursor.execute("SELECT * FROM states WHERE name LIKE %s ORDER BY id ASC", ("n%",))
 
     # Stream results row by row
     for state in cursor:
