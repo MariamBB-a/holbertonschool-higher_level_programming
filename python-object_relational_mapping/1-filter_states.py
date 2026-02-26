@@ -15,9 +15,9 @@ if __name__ == "__main__":
     )
     cursor = db.cursor()
 
-    # Filter states starting with 'N' (uppercase) only, keeping original case
+    # Only lowercase 'n'
     query = "SELECT * FROM states WHERE name LIKE %s ORDER BY id ASC"
-    cursor.execute(query, ("N%",))
+    cursor.execute(query, ("n%",))
 
     for state in cursor:
         print(state)
