@@ -21,8 +21,8 @@ if __name__ == "__main__":
 
     cursor = db.cursor()
     # Use a case-insensitive LIKE for lowercase 'n'
-    query = "SELECT * FROM states WHERE name LIKE %s ORDER BY id ASC"
-    cursor.execute(query, ('n%',))  # lowercase 'n'
+    query = "SELECT * FROM states WHERE BINARY name LIKE 'n%' ORDER BY id ASC"
+    cursor.execute(query)
 
     # Print results
     for state in cursor.fetchall():
