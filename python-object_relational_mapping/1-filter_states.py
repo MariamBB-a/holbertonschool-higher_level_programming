@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Lists all states starting with lowercase 'n' from the database"""
+"""Lists all states starting with 'N' (case-sensitive) from the database"""
 
 import MySQLdb
 import sys
@@ -14,12 +14,21 @@ if __name__ == "__main__":
         db=sys.argv[3]
     )
 
+    # Create cursor object
     cur = db.cursor()
-    # Case-sensitive search for lowercase 'n'
-    cur.execute("SELECT * FROM states WHERE BINARY name LIKE 'n%' ORDER BY id ASC")
 
+    # Execute SQL query using BINARY for case-sensitive match
+    query = (
+        "SELECT * FROM states "
+        "WHERE BINARY name LIKE 'N%' "
+        "ORDER BY id ASC"
+    )
+    cur.execute(query)
+
+    # Fetch all rows and display results
     for row in cur.fetchall():
         print(row)
 
+    # Close cursor and connection
     cur.close()
     db.close()
