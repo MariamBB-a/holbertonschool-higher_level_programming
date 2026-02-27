@@ -1,9 +1,8 @@
 #!/usr/bin/python3
-"""Lists all states starting with 'N' (case-insensitive for the filter)"""
+"""Lists all states starting with lowercase 'n' from the database"""
 
 import MySQLdb
 import sys
-
 
 if __name__ == "__main__":
     # Connect to MySQL server
@@ -16,13 +15,8 @@ if __name__ == "__main__":
     )
 
     cur = db.cursor()
-    # Case-sensitive search for lowercase 'n', split line to satisfy pycodestyle
-    query = (
-        "SELECT * FROM states "
-        "WHERE BINARY name LIKE 'n%' "
-        "ORDER BY id ASC"
-    )
-    cur.execute(query)
+    # Case-sensitive search for lowercase 'n'
+    cur.execute("SELECT * FROM states WHERE BINARY name LIKE 'n%' ORDER BY id ASC")
 
     for row in cur.fetchall():
         print(row)
