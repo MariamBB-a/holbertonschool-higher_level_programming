@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """Lists all states from the database hbtn_0e_0_usa
-where name matches the argument (safe against SQL injection)."""
+where name matches the argument (using format)."""
+
 
 import MySQLdb
 import sys
-
 
 if __name__ == "__main__":
     # Get arguments
@@ -20,9 +20,11 @@ if __name__ == "__main__":
     # Create cursor
     cur = db.cursor()
 
-    # Execute parameterized query
-    query = "SELECT * FROM states WHERE name = %s ORDER BY id ASC"
-    cur.execute(query, (state_name,))
+    # Build query using format (assignment requirement)
+    query = "SELECT * FROM states WHERE name = '{}' ORDER BY id ASC".format(state_name)
+
+    # Execute query
+    cur.execute(query)
 
     # Fetch and print results
     for row in cur.fetchall():
