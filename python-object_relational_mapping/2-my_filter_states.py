@@ -2,7 +2,6 @@
 """Lists all states from the database hbtn_0e_0_usa
 where name matches the argument (using format)."""
 
-
 import MySQLdb
 import sys
 
@@ -14,14 +13,22 @@ if __name__ == "__main__":
     state_name = sys.argv[4]
 
     # Connect to MySQL server
-    db = MySQLdb.connect(host="localhost", port=3306,
-                         user=user, passwd=passwd, db=db_name)
+    db = MySQLdb.connect(
+        host="localhost",
+        port=3306,
+        user=user,
+        passwd=passwd,
+        db=db_name
+    )
 
     # Create cursor
     cur = db.cursor()
 
     # Build query using format (assignment requirement)
-    query = "SELECT * FROM states WHERE name = '{}' ORDER BY id ASC".format(state_name)
+    query = (
+        "SELECT * FROM states WHERE name = '{}' "
+        "ORDER BY id ASC".format(state_name)
+    )
 
     # Execute query
     cur.execute(query)
