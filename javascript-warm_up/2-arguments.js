@@ -1,6 +1,4 @@
 #!/usr/bin/node
-
-// Get the number of arguments excluding 'node' and script name
 const argsCount = process.argv.length - 2;
 
 if (argsCount === 0) {
