@@ -1,11 +1,12 @@
 #!/usr/bin/node
 
-const Arg = process.argv.slice(2);
+// Get the number of arguments excluding 'node' and script name
+const argsCount = process.argv.length - 2;
 
-if (Arg.length === 1) {
-  console.log('Argument found');
-} else if (Arg.length >= 2) {
-  console.log('Arguments found');
-} else if (Arg.length === 0) {
+if (argsCount === 0) {
   console.log('No argument');
+} else if (argsCount === 1) {
+  console.log('Argument found');
+} else {
+  console.log('Arguments found');
 }
