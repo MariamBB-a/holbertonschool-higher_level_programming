@@ -1,3 +1,4 @@
+# task_04_db.py
 from flask import Flask, render_template, request
 import json
 import csv
@@ -6,92 +7,77 @@ import os
 
 app = Flask(__name__)
 
-# ----- Helper Functions -----
-def read_json(file_path):
+# Function to read JSON data
+def read_json():
     try:
-        with open(file_path, 'r') as f:
-            data = json.load(f)
-            if not isinstance(data, list):
-                return []
-            return data
-    except Exception as e:
-        print(f"Error reading JSON: {e}")
-        return []
+        with open('products.json', 'r') as f:
+            return json.load(f)
+    except Exception:
+        return None
 
-def read_csv(file_path):
-    products = []
+# Function to read CSV data
+def read_csv():
     try:
-        with open(file_path, 'r') as f:
+        data = []
+        with open('products.csv', 'r') as f:
             reader = csv.DictReader(f)
             for row in reader:
-                try:
-                    row['id'] = int(row.get('id', 0))
-                    row['price'] = float(row.get('price', 0))
-                except ValueError:
-                    row['id'] = 0
-                    row['price'] = 0.0
-                products.append(row)
-    except Exception as e:
-        print(f"Error reading CSV: {e}")
-    return products
+                # Convert price to float
+                row['price'] = float(row['price'])
+                row['id'] = int(row['id'])
+                data.append(row)
+        return data
+    except Exception:
+        return None
 
-def read_sqlite(db_path):
-    products = []
+# Function to read SQLite data
+def read_sql():
+    if not os.path.exists('products.db'):
+        return None
     try:
-        conn = sqlite3.connect(db_path)
+        conn = sqlite3.connect('products.db')
+        conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
-        cursor.execute("SELECT id, name, category, price FROM Products")
+        cursor.execute('SELECT * FROM Products')
         rows = cursor.fetchall()
-        for row in rows:
-            products.append({
-                "id": row[0],
-                "name": row[1],
-                "category": row[2],
-                "price": row[3]
-            })
+        data = [dict(row) for row in rows]
         conn.close()
-    except Exception as e:
-        print(f"Error reading SQLite: {e}")
-    return products
+        return data
+    except Exception:
+        return None
 
-# ----- Flask Route -----
 @app.route('/products')
 def products():
-    source = request.args.get('source')
+    source = request.args.get('source', 'json').lower()
     id_param = request.args.get('id')
+    products_list = None
+    error = None
 
-    base_path = os.path.dirname(__file__)
-    json_file = os.path.join(base_path, 'products.json')
-    csv_file = os.path.join(base_path, 'products.csv')
-    db_file = os.path.join(base_path, 'products.db')
-
-    data = []
-    error_message = None
-
-    # Select source
+    # Select data source
     if source == 'json':
-        data = read_json(json_file)
+        products_list = read_json()
     elif source == 'csv':
-        data = read_csv(csv_file)
+        products_list = read_csv()
     elif source == 'sql':
-        data = read_sqlite(db_file)
+        products_list = read_sql()
     else:
-        error_message = "Wrong source"
-        data = []
+        error = "Wrong source"
 
-    # Filter by id if provided
-    if id_param and error_message is None:
+    # Handle reading errors
+    if products_list is None and error is None:
+        error = "Error reading data"
+
+    # Filter by ID if provided
+    if products_list and id_param:
         try:
             id_int = int(id_param)
-            filtered = [item for item in data if item.get('id') == id_int]
-            if not filtered:
-                error_message = "Product not found"
-            else:
-                data = filtered
+            products_list = [p for p in products_list if p['id'] == id_int]
+            if not products_list:
+                error = "Product not found"
         except ValueError:
-            error_message = "Invalid id parameter"
+            error = "Invalid id parameter"
 
-    return render_template('product_display.html', products=data, error=error_message)
+    return render_template('product_display.html', products=products_list, error=error)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
